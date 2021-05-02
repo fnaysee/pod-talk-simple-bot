@@ -1,5 +1,5 @@
 let chatClient = require('./chatClient')({
-    token: "0bea561f71af4cc9829afce8ac472f2f" //This is bots token
+    token: "0bea561f71af4cc9829afce8ac472f2d" //This is bots token
 });
 
 const threads = [];
