@@ -1,8 +1,10 @@
-let chatClient = require('./chatClient')({
 
+import chatClient from "./chatClient"
+let chatAgent = new chatClient({
+    token: '0bea561f71af4cc9829afce8ac472f2d'
 });
 
-chatClient.on("chatReady", function () {
+chatAgent.on("chatReady", function () {
 
     /*let params = {
         threadId: 192209,
@@ -22,7 +24,7 @@ chatClient.on("chatReady", function () {
         }
     });*/
 
-    chatClient.startBot({
+    chatAgent.startBot({
         botName: 'questions1BOT',
         threadId: 473534
     }, result => {
@@ -30,9 +32,9 @@ chatClient.on("chatReady", function () {
     });
 });
 
-chatClient.on("chatState", function (chatState) {
+chatAgent.on("chatState", function (chatState) {
     console.log('state <',chatState, '> end');
 });
-chatClient.on('error', errors => {
+chatAgent.on('error', errors => {
     console.log('Errors: ', errors)
 });

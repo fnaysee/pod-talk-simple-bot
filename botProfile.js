@@ -1,5 +1,6 @@
-let chatClient = require('./chatClient')({
-    token: "0bea561f71af4cc9829afce8ac472f2d" //This is bots token
+import chatClient from "./chatClient"
+let chatAgent = chatClient({
+    token: '0bea561f71af4cc9829afce8ac472f2d' //This is bot token
 });
 
 const threads = [];
@@ -52,16 +53,16 @@ const questions = [
 ]
 
 
-chatClient.on("chatReady", function () {
+chatAgent.on("chatReady", function () {
 
 });
 
-chatClient.on('error', errors => {
+chatAgent.on('error', errors => {
     console.log('Errors: ', errors)
 });
 
 
-chatClient.on('messageEvents', function (event) {
+chatAgent.on('messageEvents', function (event) {
     if(event.type === 'MESSAGE_NEW' && event.result.message.messageType === 1) {
         let msg = event.result.message;
         if(msg.message === '/start@questions1BOT') {
@@ -111,7 +112,7 @@ chatClient.on('messageEvents', function (event) {
 });
 
 function printGameIsDone(currentUser){
-    chatClient.sendTextMessage({
+    chatAgent.sendTextMessage({
         threadId: currentUser.thread,
         textMessage: `بازی تمام شده!
 ` + printResult(currentUser) + ` 
@@ -147,7 +148,7 @@ function isGameStarted(msg) {
 }
 
 function openThreadWithUser(msg) {
-    chatClient.createThread({
+    chatAgent.createThread({
         "invitees": [
             {"id": msg.ownerId, "idType": "TO_BE_USER_ID"}
         ],
@@ -200,7 +201,7 @@ function startQuestionAnswerProcess(msg, currentUser) {
     }
 
     if(!currentUser.isGameDone) {
-        chatClient.sendTextMessage({
+        chatAgent.sendTextMessage({
             threadId: msg.threadId,
             textMessage: 'خوب مسابقه شروع شد،' + '\n'
                 + 'سوال اول:' + '\n'
@@ -209,7 +210,7 @@ function startQuestionAnswerProcess(msg, currentUser) {
 
         });
     } else {
-        chatClient.sendTextMessage({
+        chatAgent.sendTextMessage({
             threadId: msg.threadId,
             textMessage: 'خوب مسابقه از اول شروع شد و امتیاز شما ریست شد،' + '\n'
                 + 'سوال اول:' + '\n'
@@ -247,7 +248,7 @@ function sendNextQuestion(msg, currentUser) {
     if(!currentUser.currentQuestion) {
         finishTheGame(currentUser)
     } else {
-        chatClient.sendTextMessage({
+        chatAgent.sendTextMessage({
             threadId: msg.threadId,
             textMessage: questions[currentUser.currentQuestion].question + '\n'
                 + questions[currentUser.currentQuestion].answers.join('\n'),
@@ -274,7 +275,7 @@ function sendPrevQuestion(msg, currentUser) {
         currentUser = getCurrentUser(msg);
     }
     currentUser.currentQuestion = currentUser.currentQuestion > 0 ? currentUser.currentQuestion - 1 : 0;
-    chatClient.sendTextMessage({
+    chatAgent.sendTextMessage({
         threadId: msg.threadId,
         textMessage: questions[currentUser.currentQuestion].question + '\n'
             + questions[currentUser.currentQuestion].answers.join('\n'),
@@ -298,7 +299,7 @@ function sendPrevQuestion(msg, currentUser) {
 
 function finishTheGame(currentUser) {
     currentUser.isGameDone = true;
-    chatClient.sendTextMessage({
+    chatAgent.sendTextMessage({
         threadId: currentUser.thread,
         textMessage: `
         👏 تمام! این هم از نتیجه عملکرد شما:

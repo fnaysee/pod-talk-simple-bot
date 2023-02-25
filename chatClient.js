@@ -1,4 +1,4 @@
-const Chat = require('podchat');
+import Chat from "podchat"
 
 const defaults = {
     appId: new Date().getTime(),
@@ -24,7 +24,18 @@ const defaults = {
         actualTiming: true // log actual functions running time
     }
 };
+let chatAgent;
+function chatClient(params) {
+    if(params) {
+        return new Chat({...defaults,...params})
 
-module.exports = params => {
-    return new Chat({...defaults,...params})
+    } else {
+        if(chatAgent)
+            return chatAgent;
+        else {
+            chatAgent = new Chat({...defaults,...params});
+            return chatAgent;
+        }
+    }
 }
+export default chatClient;
