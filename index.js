@@ -1,7 +1,7 @@
 
 import chatClient from "./chatClient"
 let chatAgent = new chatClient({
-    token: '0bea561f71af4cc9829afce8ac472f2d'
+    token: 'b0b934f5518947d6ad06120ecd5e490a.XzIwMjMy'//'0bea561f71af4cc9829afce8ac472f2d'
 });
 
 chatAgent.on("chatReady", function () {

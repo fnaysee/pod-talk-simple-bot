@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-blob": "^3.0.2",
     "express": "^4.17.1",
-    "podchat": "^12.5.3"
+    "node-blob": "^0.0.2",
+    "podchat": "^12.5.5"
   }
 }
