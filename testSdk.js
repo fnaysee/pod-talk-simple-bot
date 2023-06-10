@@ -2,12 +2,34 @@ import chatClient from "./chatClient.js"
 import Blob from "cross-blob"
 import * as fs from "fs";
 let chatAgent = chatClient({
-    token: "e6dbaf79b8f54bc4abe2f1c72e8569df.XzIwMjM1"//'e345276676a3404f8534500aebd26376.XzIwMjM0' //bot token //091da37d6c964bcc94bc823853028e86.XzIwMjIxMg //b0b934f5518947d6ad06120ecd5e490a.XzIwMjMy //a19ab6251b174702b904deae848f9c4f.XzIwMjMz
+    token: "3bc8629849f24e54a955ec6a302b7d98.XzIwMjM2"//'e345276676a3404f8534500aebd26376.XzIwMjM0' //bot token //091da37d6c964bcc94bc823853028e86.XzIwMjIxMg //b0b934f5518947d6ad06120ecd5e490a.XzIwMjMy //a19ab6251b174702b904deae848f9c4f.XzIwMjMz
 });
 
+let runtest = false;
 chatAgent.on("chatState", function (event) {
     console.log("chatState", event);
+
+    if(event.socketState == 1 && !runtest) {
+        runtest = true;
+        reconnectSocketForTest(4);
+
+        setTimeout(()=>{
+            reconnectSocketForTest(4);
+        }, 15000)
+    }
+    // setInterval(function (){
+    //     chatAgent.getThreads({}, function (result){console.log("getThreads.result: hasError?", result.hasError)})
+    // }, 1000)
 });
+
+function reconnectSocketForTest(count){
+    setTimeout(()=>{
+        chatAgent.reconnect();
+        if(count) {
+            reconnectSocketForTest(count - 1)
+        }
+    }, 200);
+}
 
 chatAgent.on("chatReady", function () {
     console.log("chatReady");

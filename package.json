@@ -13,6 +13,6 @@
     "cross-blob": "^3.0.2",
     "express": "^4.17.1",
     "node-blob": "^0.0.2",
-    "podchat": "^12.5.5"
+    "podchat": "^12.6.1-snapshot.0"
   }
 }
